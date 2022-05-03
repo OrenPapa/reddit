@@ -1,0 +1,30 @@
+.subreddit-card {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid rgb(42, 42, 42);
+  border-radius: 10px;
+  width: 350px;
+  height: 175px;
+
+  &__content {
+    display: flex;
+    align-items: start;
+    justify-content: space-around;
+    flex-direction: column;
+    width: 320px;
+    height: 160px;
+  }
+
+  &__title {
+      font-size: 32px;
+      font-weight: 700;
+      color: black;
+  }
+
+  &__description {
+    font-size: 26px;
+    font-weight: 500;
+    color: black;
+  }
+}
