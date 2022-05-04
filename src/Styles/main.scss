@@ -1,6 +1,11 @@
 //Components
 @import "./Components/Navbar.scss";
 @import "./Components/SubredditCard.scss";
+@import "./Components/InformationCard.scss";
+@import "./Components/PostCard.scss";
+@import "./Components/SortBy.scss";
 
 //pages
 @import "./Pages/Homepage.scss";
+@import "./Pages/Posts.scss";
+@import "./Pages/Post.scss";

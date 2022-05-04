@@ -1,0 +1,21 @@
+.post-screen {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  margin-top: 80px;
+  width: 100%;
+
+  &__top-panel {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 900px;
+    height: 280px;
+  }
+
+  &__bottom-panel {
+    width: 700px;
+  }
+}
