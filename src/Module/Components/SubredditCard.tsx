@@ -1,9 +1,13 @@
-import React from "react";
+import React, { MouseEventHandler } from "react";
 import "../../Styles/main.scss";
 
-function SubredditCard(props: { title: string; description: string }) {
+function SubredditCard(props: {
+  title: string;
+  description: string;
+  onClick: MouseEventHandler<HTMLDivElement>;
+}) {
   return (
-    <div className="subreddit-card">
+    <div onClick={props.onClick} className="subreddit-card">
       <div className="subreddit-card__content">
         <div className="subreddit-card__title">{props.title}</div>
         <div className="subreddit-card__description">{props.description}</div>

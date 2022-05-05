@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 
 function useSubreddit(url: string) {
-  const [data, setData] = useState([{title: "", description: ""}]);
+  const [data, setData] = useState([{ id: 0, title: "", description: "" }]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
