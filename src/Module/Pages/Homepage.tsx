@@ -1,20 +1,17 @@
-import React from "react";
+import React, { useCallback, useRef, useState } from "react";
 import Navbar from "../Components/Navbar";
 import "../../Styles/main.scss";
 import SubredditCard from "../Components/SubredditCard";
 import useSubreddit from "../../Hooks/useSubreddit";
 import { useDispatch } from "react-redux";
-import { bindActionCreators } from "redux";
-import { ActionCreators } from "../../Redux";
-import { useSelector } from "react-redux";
-import { State } from "../../Redux/Reducers/CombineReducers";
 import { useNavigate } from "react-router-dom";
 
 function Homepage() {
-  const { subredditData, loadingSubbredits, subredditError } = useSubreddit();
   const dispatch = useDispatch();
   const navigate = useNavigate();
-
+  const [query, setQuery] = useState("");
+  const [pageNumber, SetPageNumber] = useState(1);
+  const { subredditData, loadingSubbredits, subredditError } = useSubreddit();
   return (
     <>
       <Navbar />
@@ -25,15 +22,15 @@ function Homepage() {
         )}
         {!loadingSubbredits &&
           !subredditError &&
-          subredditData.map((item) => {
+          subredditData?.map((item, i) => {
+
             return (
-              <div key={item.id}>
                 <SubredditCard
+                  key={item.id}
                   onClick={() => navigate(`/posts/${item.id}`)}
                   title={item.title}
                   description={item.description}
                 />
-              </div>
             );
           })}
       </div>

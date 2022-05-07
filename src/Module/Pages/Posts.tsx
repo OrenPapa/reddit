@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import usePost from "../../Hooks/usePost";
 import "../../Styles/main.scss";
@@ -9,8 +9,13 @@ import SortBy from "../Components/SortBy";
 
 function Posts() {
   const { subredditId } = useParams();
-  const { postData, loadingPosts, postsError } = usePost(`https://6040c786f34cf600173c8cb7.mockapi.io/subreddits/${subredditId}/posts`);
+  const [urlParam, setUrlParam] = useState("");
+  const { postData, loadingPosts, postsError } = usePost(
+    `https://6040c786f34cf600173c8cb7.mockapi.io/subreddits/${subredditId}/posts${urlParam}`
+  );
   const navigate = useNavigate();
+  const sortByTitle = "?sortBy=title";
+  console.log(urlParam)
 
   return (
     <>
@@ -23,9 +28,9 @@ function Posts() {
           )}
           {!loadingPosts && (
             <div className="posts-screen__left-panel-content">
-              <SortBy />
+              <SortBy onClick={() => setUrlParam(sortByTitle)} />
               <div className="posts-screen__posts-container">
-                {postData.map((post) => {
+                {postData?.map((post) => {
                   return (
                     <PostCard
                       key={post.id}

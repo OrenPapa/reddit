@@ -23,7 +23,7 @@ function Post() {
           <PostCard />
         </div>
         <div className="post-screen__bottom-panel">
-          {CommentsData.map((comment) => {
+          {CommentsData?.map((comment) => {
             return (
               <PostCard
                 key={comment.id}

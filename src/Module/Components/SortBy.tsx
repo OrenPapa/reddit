@@ -1,8 +1,9 @@
-import React from "react";
+import React, { MouseEventHandler } from "react";
 import { useState } from "react";
 import "../../Styles/Components/Navbar.scss";
+import { Icon } from "@iconify/react";
 
-function SortBy() {
+function SortBy(props: { onClick: MouseEventHandler<HTMLDivElement> }) {
   const [openDropdown, setOpenDropdown] = useState(false);
   return (
     <div className="sort-by">
@@ -11,10 +12,20 @@ function SortBy() {
         <div
           className="sort-by__dropdown-header"
           onClick={() => setOpenDropdown(!openDropdown)}
-        ></div>
+        >
+          Sort by:
+          <Icon
+            icon="dashicons:arrow-down-alt2"
+            color="black"
+            width="16"
+            height="16"
+          />
+        </div>
         {openDropdown && (
           <div className="sort-by__dropdown">
-            <div className="sort-by__dropdown-item">Title desc</div>
+            <div onClick={props.onClick} className="sort-by__dropdown-item">
+              Title desc
+            </div>
             <div className="sort-by__dropdown-item">Date asce</div>
             <div className="sort-by__dropdown-item">Date desc</div>
           </div>

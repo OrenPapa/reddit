@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import { Subreddits } from "../Types/Subreddits";
 
 function useSubreddit() {
-  const [subredditData, setSubredditData] = useState([{ id: 0, title: "", description: "" }]);
+  const [subredditData, setSubredditData] = useState<Subreddits>();
   const [loadingSubbredits, setLoadingSubreddits] = useState(false);
   const [subredditError, setSubredditError] = useState(null);
   const url = "https://6040c786f34cf600173c8cb7.mockapi.io/subreddits";

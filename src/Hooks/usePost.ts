@@ -1,11 +1,10 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useParams } from "react-router-dom";
+import { Posts } from "../Types/Posts";
 
 function useSubreddit(url: string) {
-  const [postData, setPostData] = useState([
-    { id: 0, title: "", user: "", body: "" },
-  ]);
+  const [postData, setPostData] = useState<Posts>();
   const [loadingPosts, setLoadingPosts] = useState(false);
   const [postsError, setPostsError] = useState(null);
   const { subredditId } = useParams();
