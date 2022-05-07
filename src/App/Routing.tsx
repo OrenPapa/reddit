@@ -10,8 +10,8 @@ const Routing = () => {
       <Router>
         <Routes>
           <Route path="/" element={<Homepage />} />
-          <Route path="/posts" element={<Posts />} />
-          <Route path="/post" element={<Post />} />
+          <Route path="/posts/:subredditId" element={<Posts />} />
+          <Route path="/posts/:subredditId/post/:postId" element={<Post />} />
         </Routes>
       </Router>
     </>

@@ -8,29 +8,28 @@ import { bindActionCreators } from "redux";
 import { ActionCreators } from "../../Redux";
 import { useSelector } from "react-redux";
 import { State } from "../../Redux/Reducers/CombineReducers";
+import { useNavigate } from "react-router-dom";
 
 function Homepage() {
-  const { data, loading, error } = useSubreddit(
-    "https://6040c786f34cf600173c8cb7.mockapi.io/subreddits"
-  );
-
+  const { subredditData, loadingSubbredits, subredditError } = useSubreddit();
   const dispatch = useDispatch();
-  const subredditState = useSelector((state: State) => state.subreddit);
-  const { getSubredditId } = bindActionCreators(ActionCreators, dispatch);
+  const navigate = useNavigate();
 
   return (
     <>
       <Navbar />
       <div className="homepage">
-        {loading && <h2>Loading...</h2>}
-        {error && <h2>An error has occured please refresh your page.</h2>}
-        {!loading &&
-          !error &&
-          data.map((item) => {
+        {loadingSubbredits && <h2>Loading...</h2>}
+        {subredditError && (
+          <h2>An error has occured please refresh your page.</h2>
+        )}
+        {!loadingSubbredits &&
+          !subredditError &&
+          subredditData.map((item) => {
             return (
               <div key={item.id}>
                 <SubredditCard
-                onClick={() => getSubredditId(item.id)}
+                  onClick={() => navigate(`/posts/${item.id}`)}
                   title={item.title}
                   description={item.description}
                 />

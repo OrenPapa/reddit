@@ -16,6 +16,9 @@
   }
 
   &__bottom-panel {
+    display: flex;
+    flex-direction: column;
     width: 700px;
+    height: fit-content;
   }
 }

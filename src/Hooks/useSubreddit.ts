@@ -1,25 +1,26 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 
-function useSubreddit(url: string) {
-  const [data, setData] = useState([{ id: 0, title: "", description: "" }]);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
+function useSubreddit() {
+  const [subredditData, setSubredditData] = useState([{ id: 0, title: "", description: "" }]);
+  const [loadingSubbredits, setLoadingSubreddits] = useState(false);
+  const [subredditError, setSubredditError] = useState(null);
+  const url = "https://6040c786f34cf600173c8cb7.mockapi.io/subreddits";
 
   useEffect(() => {
-    setLoading(true);
+    setLoadingSubreddits(true);
     axios
       .get(url)
       .then((response) => {
-        setData(response.data);
+        setSubredditData(response.data);
       })
       .catch((err) => {
-        setError(err);
+        setSubredditError(err);
       })
-      .finally(() => setLoading(false));
+      .finally(() => setLoadingSubreddits(false));
   }, [url]);
 
-  return { data, loading, error };
+  return { subredditData, loadingSubbredits, subredditError };
 }
 
 export default useSubreddit;

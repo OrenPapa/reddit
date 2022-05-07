@@ -1,4 +1,4 @@
-import React from "react";
+import React, { MouseEventHandler } from "react";
 import "../../Styles/Components/Navbar.scss";
 import { Icon } from "@iconify/react";
 
@@ -7,7 +7,7 @@ function PostCard(props: {
   title?: string;
   description?: string;
   user?: string;
-  date?: string;
+  onClick?: MouseEventHandler<HTMLDivElement>;
 }) {
   return (
     <div className="post-card">
@@ -33,13 +33,13 @@ function PostCard(props: {
             </div>
           </div>
         </div>
-        <div className="post-card__right-panel">
+        <div onClick={props.onClick} className="post-card__right-panel">
           <div className="post-card__title">{props.title}</div>
           <div className="post-card__description">{props.description}</div>
           <div className="post-card__bottom-panel">
             <div className="post-card__user">{props.user}</div>
             <div className="post-card__date">
-              {props.date + " " + "days ago"}
+              4 days ago
             </div>
           </div>
         </div>

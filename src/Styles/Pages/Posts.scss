@@ -23,6 +23,13 @@
     margin-top: 40px;
   }
 
+  &__posts-container {
+    display: flex;
+    flex-direction: column;
+    width: 85%;
+    height: fit-content;
+  }
+
   &__right-panel {
     display: flex;
     justify-content: center;
