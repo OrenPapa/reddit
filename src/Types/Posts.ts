@@ -1,8 +1,10 @@
-export type Posts = [
-  post: {
-    id: string;
-    title: string;
-    user: string;
-    body: string;
-  }
-];
+export type Posts = [Post];
+
+export type Post = {
+  id: string;
+  title: string;
+  user: string;
+  body: string;
+  upvotes: number;
+  downvotes: number;
+};

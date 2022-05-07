@@ -18,19 +18,16 @@ function Homepage() {
         {subredditError && (
           <h2>An error has occured please refresh your page.</h2>
         )}
-        {!loadingSubbredits &&
-          !subredditError &&
-          subredditData?.map((item, i) => {
-
-            return (
-                <SubredditCard
-                  key={item.id}
-                  onClick={() => navigate(`/posts/${item.id}`)}
-                  title={item.title}
-                  description={item.description}
-                />
-            );
-          })}
+        {subredditData?.map((item, i) => {
+          return (
+            <SubredditCard
+              key={item.id}
+              onClick={() => navigate(`/posts/${item.id}`)}
+              title={item.title}
+              description={item.description}
+            />
+          );
+        })}
       </div>
     </>
   );
