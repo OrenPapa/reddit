@@ -1,4 +1,4 @@
-import React, { useCallback, useRef, useState } from "react";
+import React from "react";
 import Navbar from "../Components/Navbar";
 import "../../Styles/main.scss";
 import SubredditCard from "../Components/SubredditCard";
@@ -9,8 +9,6 @@ import { useNavigate } from "react-router-dom";
 function Homepage() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const [query, setQuery] = useState("");
-  const [pageNumber, SetPageNumber] = useState(1);
   const { subredditData, loadingSubbredits, subredditError } = useSubreddit();
   return (
     <>
