@@ -11,6 +11,7 @@ function Homepage() {
   const { subredditData, loadingSubbredits, subredditError, hasMore } =
     useSubreddit(pageNumber);
   let observer = useRef<IntersectionObserver | null>(null);
+
   const lastSubredditRef = useCallback(
     (node: any) => {
       if (loadingSubbredits) return;
@@ -29,38 +30,40 @@ function Homepage() {
     <>
       <Navbar />
       <div className="homepage">
-        {subredditData?.map((item, i) => {
-          if (subredditData.length === i + 1) {
-            return (
-              <div key={item.id} ref={lastSubredditRef}>
-                <SubredditCard
-                  key={item.id}
-                  onClick={() => navigate(`/posts/${item.id}`)}
-                  title={item.title}
-                  description={item.description}
-                />
-              </div>
-            );
-          } else {
-            return (
-              <div key={item.id}>
-                <SubredditCard
-                  key={item.id}
-                  onClick={() => navigate(`/posts/${item.id}`)}
-                  title={item.title}
-                  description={item.description}
-                />
-              </div>
-            );
-          }
-        })}
+        <div className="homepage__subreddits">
+          {subredditData?.map((item, i) => {
+            if (subredditData.length === i + 1) {
+              return (
+                <div key={item.id} ref={lastSubredditRef}>
+                  <SubredditCard
+                    key={item.id}
+                    onClick={() => navigate(`/posts/${item.id}`)}
+                    title={item.title}
+                    description={item.description}
+                  />
+                </div>
+              );
+            } else {
+              return (
+                <div key={item.id}>
+                  <SubredditCard
+                    key={item.id}
+                    onClick={() => navigate(`/posts/${item.id}`)}
+                    title={item.title}
+                    description={item.description}
+                  />
+                </div>
+              );
+            }
+          })}
+        </div>
       </div>
-
-      {loadingSubbredits && <h2>Loading...</h2>}
-      {subredditError && (
-        <h2>An error has occured please refresh your page.</h2>
-      )}
-      
+      <div className="homepage__text">
+        {loadingSubbredits && <h2>Loading...</h2>}
+        {subredditError && (
+          <h2>An error has occured please refresh your page.</h2>
+        )}
+      </div>
     </>
   );
 }

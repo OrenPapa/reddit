@@ -2,8 +2,22 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  flex-wrap: wrap;
   margin-top: 80px;
   width: 100%;
 
+  &__subreddits {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    width: 100%;
+    margin-top: 80px;
+  }
+
+  &__text {
+    display: flex;
+    justify-content: center;
+    margin: 20px;
+    font-size: 26px;
+  }
 }

@@ -20,11 +20,11 @@ function useSubreddit(pageNumber: number) {
           Array.from(new Set([...subredditData, ...response.data]))
         );
         setHasMore(response.data.length > 0);
+        setLoadingSubreddits(false);
       })
       .catch((err) => {
         setSubredditError(err);
-      })
-      .finally(() => setLoadingSubreddits(false));
+      });
   }, [url]);
 
   return { loadingSubbredits, subredditError, subredditData, hasMore };
