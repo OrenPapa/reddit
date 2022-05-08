@@ -7,7 +7,7 @@ function Navbar(props: { pageTitle?: string; adminName?: string }) {
   return (
     <div className="navbar">
       <div onClick={() => navigate("/")} className="navbar__title">
-        Reddit
+        reddit
       </div>
       <div className="navbar__page-title">{props.pageTitle}</div>
       <div className="navbar__admin-name">{props.adminName}</div>

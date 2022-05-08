@@ -24,11 +24,11 @@ function Homepage() {
       if (node) observer.current.observe(node);
     },
     [loadingSubbredits, hasMore]
-  );
-
+  ); 
+  
   return (
     <>
-      <Navbar />
+      <Navbar pageTitle="subreddits" />
       <div className="homepage">
         <div className="homepage__subreddits">
           {subredditData?.map((item, i) => {

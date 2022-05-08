@@ -18,4 +18,18 @@
     margin-right: 40px;
     cursor: pointer;
   }
+
+  &__page-title {
+    font-size: 24px;
+    font-weight: 500;
+    color: white;
+    margin-right: 20px;
+  }
+
+  &__admin-name {
+    font-size: 20px;
+    font-weight: 500;
+    color: white;
+    cursor: pointer;
+  }
 }

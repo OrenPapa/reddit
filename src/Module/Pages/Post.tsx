@@ -18,7 +18,7 @@ function Post() {
 
   return (
     <>
-      <Navbar />
+      <Navbar  pageTitle={SelectedPost?.title} adminName={SelectedPost?.user}/>
       <div className="post-screen">
         <div className="post-screen__top-panel">
           <PostCard
