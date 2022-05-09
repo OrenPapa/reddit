@@ -2,9 +2,9 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Subreddit, Subreddits, SubredditsResponse } from "../Types/Subreddits";
 import { useDispatch } from "react-redux";
+import { setSubredditsData } from "../Redux/SubredditSlice";
 
 function useSubreddit(pageNumber: number) {
-  const [subredditData, setSubredditData] = useState<Array<any>>([]);
   const [loadingSubbredits, setLoadingSubreddits] = useState(false);
   const [subredditError, setSubredditError] = useState(null);
   const [hasMore, setHasMore] = useState(false);
@@ -16,9 +16,7 @@ function useSubreddit(pageNumber: number) {
     axios
       .get(url)
       .then((response: SubredditsResponse) => {
-        setSubredditData(
-          Array.from(new Set([...subredditData, ...response.data]))
-        );
+        dispatch(setSubredditsData(response.data))
         setHasMore(response.data.length > 0);
         setLoadingSubreddits(false);
       })
@@ -27,7 +25,7 @@ function useSubreddit(pageNumber: number) {
       });
   }, [url]);
 
-  return { loadingSubbredits, subredditError, subredditData, hasMore };
+  return { loadingSubbredits, subredditError, hasMore };
 }
 
 export default useSubreddit;

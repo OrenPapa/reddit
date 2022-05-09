@@ -18,16 +18,19 @@ function Posts() {
   const navigate = useNavigate();
   const sortByTitle = "?sortBy=title";
   const postState = useSelector((state: RootState) => state.postsSlice.posts);
+  const SubredditsState = useSelector(
+    (state: RootState) => state.subredditsSlice.subreddits
+  );
+
+  const selectedSubreddit = SubredditsState.find(
+    (subreddit) => subreddit.id === subredditId
+  );
 
   return (
     <>
-      <Navbar />
+      <Navbar pageTitle={selectedSubreddit?.title} />
       <div className="posts-screen">
         <div className="posts-screen__left-panel">
-          {loadingPosts && <h2>Loading...</h2>}
-          {postsError && (
-            <h2>An error has occured please refresh your page.</h2>
-          )}
           <div className="posts-screen__left-panel-content">
             <SortBy onClick={() => setUrlParam(sortByTitle)} />
             <div className="posts-screen__posts-container">
@@ -45,6 +48,10 @@ function Posts() {
                   />
                 );
               })}
+              {loadingPosts && <h2>Loading...</h2>}
+              {postsError && (
+                <h2>An error has occured please refresh your page.</h2>
+              )}
             </div>
           </div>
         </div>

@@ -4,12 +4,18 @@ import "../../Styles/main.scss";
 import SubredditCard from "../Components/SubredditCard";
 import useSubreddit from "../../Hooks/useSubreddit";
 import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { RootState } from "../../Redux/Store";
 
 function Homepage() {
   const navigate = useNavigate();
   const [pageNumber, setPageNumber] = useState(1);
-  const { subredditData, loadingSubbredits, subredditError, hasMore } =
+  const { loadingSubbredits, subredditError, hasMore } =
     useSubreddit(pageNumber);
+  const SubredditsState = useSelector(
+    (state: RootState) => state.subredditsSlice.subreddits
+  );
+
   let observer = useRef<IntersectionObserver | null>(null);
 
   const lastSubredditRef = useCallback(
@@ -24,15 +30,15 @@ function Homepage() {
       if (node) observer.current.observe(node);
     },
     [loadingSubbredits, hasMore]
-  ); 
-  
+  );
+
   return (
     <>
       <Navbar pageTitle="subreddits" />
       <div className="homepage">
         <div className="homepage__subreddits">
-          {subredditData?.map((item, i) => {
-            if (subredditData.length === i + 1) {
+          {SubredditsState?.map((item, i) => {
+            if (SubredditsState.length === i + 1) {
               return (
                 <div key={item.id} ref={lastSubredditRef}>
                   <SubredditCard
