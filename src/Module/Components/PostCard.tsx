@@ -7,6 +7,8 @@ function PostCard(props: {
   title?: string;
   description?: string;
   user?: string;
+  onUpVote?: any;
+  onDownVote?: any;
   onClick?: MouseEventHandler<HTMLDivElement>;
 }) {
   return (
@@ -14,7 +16,7 @@ function PostCard(props: {
       <div className="post-card__content">
         <div className="post-card__left-panel">
           <div className="post-card__vote-container">
-            <div className="post-card__icon">
+            <div onClick={props.onUpVote} className="post-card__icon">
               <Icon
                 icon="akar-icons:arrow-up"
                 color="gray"
@@ -23,7 +25,7 @@ function PostCard(props: {
               />
             </div>
             <div className="post-card__vote-count">{props.voteCount}</div>
-            <div className="post-card__icon">
+            <div onClick={props.onDownVote} className="post-card__icon">
               <Icon
                 icon="akar-icons:arrow-down"
                 color="gray"
@@ -38,9 +40,7 @@ function PostCard(props: {
           <div className="post-card__description">{props.description}</div>
           <div className="post-card__bottom-panel">
             <div className="post-card__user">{props.user}</div>
-            <div className="post-card__date">
-              4 days ago
-            </div>
+            <div className="post-card__date">4 days ago</div>
           </div>
         </div>
       </div>

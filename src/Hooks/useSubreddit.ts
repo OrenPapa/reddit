@@ -23,7 +23,7 @@ function useSubreddit(pageNumber: number) {
       .catch((err) => {
         setSubredditError(err);
       });
-  }, [url]);
+  }, [dispatch,url,pageNumber]);
 
   return { loadingSubbredits, subredditError, hasMore };
 }

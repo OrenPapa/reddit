@@ -14,7 +14,10 @@ const PostsSlice = createSlice({
     setPostsData(state, action: PayloadAction<Array<Post>>) {
       state.posts = action.payload;
     },
+
   },
 });
 export const { setPostsData } = PostsSlice.actions;
+
+
 export default PostsSlice.reducer;

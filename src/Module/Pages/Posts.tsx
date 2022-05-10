@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import usePost from "../../Hooks/usePost";
@@ -10,6 +11,7 @@ import PostCard from "../Components/PostCard";
 import SortBy from "../Components/SortBy";
 
 function Posts() {
+  const dispatch = useDispatch();
   const { subredditId } = useParams();
   const [urlParam, setUrlParam] = useState("");
   const { loadingPosts, postsError } = usePost(
