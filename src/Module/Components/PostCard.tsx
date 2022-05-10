@@ -3,6 +3,7 @@ import "../../Styles/Components/Navbar.scss";
 import { Icon } from "@iconify/react";
 import { useDispatch } from "react-redux";
 import { updateVoteCount } from "../../Redux/PostsSlice";
+import { ActionTypes } from "../../Redux/ActionTypes";
 
 function PostCard(props: {
   id: string;
@@ -21,7 +22,9 @@ function PostCard(props: {
           <div className="post-card__vote-container">
             <div
               onClick={() =>
-                dispatch(updateVoteCount({ id: props.id, vote: "up" }))
+                dispatch(
+                  updateVoteCount({ id: props.id, vote: ActionTypes.UP_VOTE })
+                )
               }
               className="post-card__icon"
             >
@@ -35,7 +38,9 @@ function PostCard(props: {
             <div className="post-card__vote-count">{props.voteCount}</div>
             <div
               onClick={() =>
-                dispatch(updateVoteCount({ id: props.id, vote: "down" }))
+                dispatch(
+                  updateVoteCount({ id: props.id, vote: ActionTypes.DOWN_VOTE })
+                )
               }
               className="post-card__icon"
             >

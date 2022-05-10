@@ -51,6 +51,14 @@
     &:hover {
       filter: brightness(0.95);
     }
+
+    &--color-green {
+      background-color: rgba($color: green, $alpha: 10.5);
+    }
+
+    &--color-red {
+      background-color: rgba($color: red, $alpha: 10.5);
+    }
   }
 
   &__right-panel {
