@@ -3,6 +3,8 @@ import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import usePost from "../../Hooks/usePost";
+import { ActionTypes } from "../../Redux/ActionTypes";
+import { updateVoteCount } from "../../Redux/PostsSlice";
 import { RootState } from "../../Redux/Store";
 import "../../Styles/main.scss";
 import InformationCard from "../Components/InformationCard";
@@ -28,6 +30,24 @@ function Posts() {
     (subreddit) => subreddit.id === subredditId
   );
 
+  const onUpVote = (id: string) => {
+    dispatch(
+      updateVoteCount({
+        id: id,
+        vote: ActionTypes.UP_VOTE,
+      })
+    );
+  };
+
+  const onDownVote = (id: string) => {
+    dispatch(
+      updateVoteCount({
+        id: id,
+        vote: ActionTypes.DOWN_VOTE,
+      })
+    );
+  };
+
   return (
     <>
       <Navbar pageTitle={selectedSubreddit?.title} />
@@ -44,6 +64,8 @@ function Posts() {
                     title={post.title}
                     description={post.body}
                     user={post.user}
+                    upVote={() => onUpVote(post.id)}
+                    downVote={() => onDownVote(post.id)}
                     voteCount={post.upvotes - post.downvotes}
                     onClick={() =>
                       navigate(`/posts/${subredditId}/post/${post.id}`)
