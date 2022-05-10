@@ -40,6 +40,7 @@ function Posts() {
                 return (
                   <PostCard
                     key={post.id}
+                    id={post.id}
                     title={post.title}
                     description={post.body}
                     user={post.user}

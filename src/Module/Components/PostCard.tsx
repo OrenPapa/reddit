@@ -1,22 +1,30 @@
 import React, { MouseEventHandler } from "react";
 import "../../Styles/Components/Navbar.scss";
 import { Icon } from "@iconify/react";
+import { useDispatch } from "react-redux";
+import { updateVoteCount } from "../../Redux/PostsSlice";
 
 function PostCard(props: {
+  id: string;
   voteCount?: number;
   title?: string;
   description?: string;
   user?: string;
-  onUpVote?: any;
-  onDownVote?: any;
   onClick?: MouseEventHandler<HTMLDivElement>;
 }) {
+  const dispatch = useDispatch();
+
   return (
     <div className="post-card">
       <div className="post-card__content">
         <div className="post-card__left-panel">
           <div className="post-card__vote-container">
-            <div onClick={props.onUpVote} className="post-card__icon">
+            <div
+              onClick={() =>
+                dispatch(updateVoteCount({ id: props.id, vote: "up" }))
+              }
+              className="post-card__icon"
+            >
               <Icon
                 icon="akar-icons:arrow-up"
                 color="gray"
@@ -25,7 +33,12 @@ function PostCard(props: {
               />
             </div>
             <div className="post-card__vote-count">{props.voteCount}</div>
-            <div onClick={props.onDownVote} className="post-card__icon">
+            <div
+              onClick={() =>
+                dispatch(updateVoteCount({ id: props.id, vote: "down" }))
+              }
+              className="post-card__icon"
+            >
               <Icon
                 icon="akar-icons:arrow-down"
                 color="gray"

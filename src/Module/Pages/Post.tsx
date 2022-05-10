@@ -18,10 +18,11 @@ function Post() {
 
   return (
     <>
-      <Navbar  pageTitle={SelectedPost?.title} adminName={SelectedPost?.user}/>
+      <Navbar pageTitle={SelectedPost?.title} adminName={SelectedPost?.user} />
       <div className="post-screen">
         <div className="post-screen__top-panel">
           <PostCard
+            id={SelectedPost!.id}
             title={SelectedPost?.title}
             description={SelectedPost?.body}
             user={SelectedPost?.user}
@@ -29,14 +30,15 @@ function Post() {
           />
         </div>
         <div className="post-screen__bottom-panel">
-        {loadingComments && <h2>Loading...</h2>}
-        {CommentsError && (
-          <h2>An error has occured please refresh your page.</h2>
-        )}
+          {loadingComments && <h2>Loading...</h2>}
+          {CommentsError && (
+            <h2>An error has occured please refresh your page.</h2>
+          )}
           {CommentsData?.map((comment) => {
-            console.log(comment)
+            console.log(comment);
             return (
               <PostCard
+                id={comment.id}
                 key={comment.id}
                 title={"Comment"}
                 description={comment.body}
