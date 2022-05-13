@@ -3,7 +3,7 @@ import "../../Styles/Components/Navbar.scss";
 import { Icon } from "@iconify/react";
 
 function PostCard(props: {
-  id: string;
+  id?: string;
   voteCount?: number;
   title?: string;
   description?: string;
