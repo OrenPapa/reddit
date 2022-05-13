@@ -7,4 +7,6 @@ export type Post = {
   body: string;
   upvotes: number;
   downvotes: number;
+  isUpvoted: boolean; 
+  isDownvoted: boolean
 };
