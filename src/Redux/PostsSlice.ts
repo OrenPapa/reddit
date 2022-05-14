@@ -1,6 +1,10 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { Post} from "../Types/Posts";
-import { ActionTypes } from "./ActionTypes";
+
+export enum ActionTypes {
+  UP_VOTE = 'UP_VOTE',
+  DOWN_VOTE = 'DOWN_VOTE'
+}
 
 type PostsArray = {
   posts: Array<Post>;

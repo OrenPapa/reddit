@@ -6,7 +6,7 @@ export type PostCardType = {
     title?: string;
     description?: string;
     user?: string;
-    onUpvote?: MouseEventHandler<HTMLDivElement>;
-    onDownvote?: MouseEventHandler<HTMLDivElement>;
-    onClick?: MouseEventHandler<HTMLDivElement>;
+    onUpvote?: () => void;
+    onDownvote?: () => void;
+    onClick?: () => void;
   };
