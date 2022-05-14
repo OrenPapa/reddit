@@ -1,4 +1,4 @@
-import React, { useCallback, useRef, useState } from "react";
+import React, { useState } from "react";
 import Navbar from "../Components/Navbar";
 import "../../Styles/main.scss";
 import SubredditCard from "../Components/SubredditCard";
@@ -17,51 +17,32 @@ function Homepage() {
     (state: RootState) => state.subredditsSlice.subreddits
   );
 
-  let observer = useRef<IntersectionObserver | null>(null);
-
-  const lastSubredditRef = useCallback(
-    (node: any) => {
-      if (loadingSubbredits) return;
-      if (observer.current) observer.current.disconnect();
-      observer.current = new IntersectionObserver((entries) => {
-        if (entries[0].isIntersecting && hasMore) {
-          setPageNumber((prev) => prev + 1);
-        }
-      });
-      if (node) observer.current.observe(node);
-    },
-    [loadingSubbredits, hasMore]
-  );
+  window.addEventListener("scroll", () => {
+    if (
+      window.scrollY + window.innerHeight >=
+        document.documentElement.scrollHeight &&
+      hasMore
+    ) {
+      setPageNumber(pageNumber + 1);
+    }
+  });
 
   return (
     <>
       <Navbar pageTitle="subreddits" />
       <div className="homepage">
         <div className="homepage__subreddits">
-          {subredditsState?.map((item, i) => {
-            if (subredditsState.length === i + 1) {
-              return (
-                <div key={item.id} ref={lastSubredditRef}>
-                  <SubredditCard
-                    key={item.id}
-                    onClick={() => navigate(`/posts/${item.id}`)}
-                    title={item.title}
-                    description={item.description}
-                  />
-                </div>
-              );
-            } else {
-              return (
-                <div key={item.id}>
-                  <SubredditCard
-                    key={item.id}
-                    onClick={() => navigate(`/posts/${item.id}`)}
-                    title={item.title}
-                    description={item.description}
-                  />
-                </div>
-              );
-            }
+          {subredditsState?.map((item) => {
+            return (
+              <div key={item.id}>
+                <SubredditCard
+                  key={item.id}
+                  onClick={() => navigate(`/posts/${item.id}`)}
+                  title={item.title}
+                  description={item.description}
+                />
+              </div>
+            );
           })}
         </div>
       </div>
