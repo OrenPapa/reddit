@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useMemo } from "react";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
@@ -22,12 +22,13 @@ function Posts() {
   const navigate = useNavigate();
   const sortByTitle = "?sortBy=title";
   const postState = useSelector((state: RootState) => state.postsSlice.posts);
-  const SubredditsState = useSelector(
+  const subredditsState = useSelector(
     (state: RootState) => state.subredditsSlice.subreddits
   );
 
-  const selectedSubreddit = SubredditsState.find(
-    (subreddit) => subreddit.id === subredditId
+  const selectedSubreddit = useMemo(
+    () => subredditsState!.find((subreddit) => subreddit.id === subredditId),
+    [subredditsState]
   );
 
   const onUpVote = (id: string) => {
@@ -54,7 +55,7 @@ function Posts() {
 
   return (
     <>
-      <Navbar pageTitle={selectedSubreddit?.title} />
+      <Navbar pageTitle={selectedSubreddit!.title} />
       <div className="posts-screen">
         <div className="posts-screen__left-panel">
           <div className="posts-screen__left-panel-content">
@@ -69,11 +70,15 @@ function Posts() {
                     description={post.body}
                     user={post.user}
                     voteCount={post.upvotes - post.downvotes}
-                    onUpvote={() => onUpVote(post.id)}
-                    onDownvote={() => onDownVote(post.id)}
-                    onClick={() =>
-                      navigate(`/posts/${subredditId}/post/${post.id}`)
-                    }
+                    onUpvote={() => {
+                      onUpVote(post.id);
+                    }}
+                    onDownvote={() => {
+                      onDownVote(post.id);
+                    }}
+                    onClick={() => {
+                      navigate(`/posts/${subredditId}/post/${post.id}} `);
+                    }}
                   />
                 );
               })}

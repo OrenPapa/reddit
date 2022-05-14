@@ -1,24 +1,24 @@
-import React, { MouseEventHandler } from "react";
-import "../../Styles/Components/Navbar.scss";
+import "../../Styles/main.scss";
 import { Icon } from "@iconify/react";
+import { PostCardType } from "../../Types/PostCardType";
 
-function PostCard(props: {
-  id?: string;
-  voteCount?: number;
-  title?: string;
-  description?: string;
-  user?: string;
-  onUpvote?: MouseEventHandler<HTMLDivElement>;
-  onDownvote?: MouseEventHandler<HTMLDivElement>;
-  onClick?: MouseEventHandler<HTMLDivElement>;
-}) {
-
+function PostCard({
+  id,
+  voteCount,
+  title,
+  description,
+  user,
+  onUpvote,
+  onDownvote,
+  onClick,
+}: PostCardType) {
+  
   return (
     <div className="post-card">
       <div className="post-card__content">
         <div className="post-card__left-panel">
           <div className="post-card__vote-container">
-            <div onClick={props.onUpvote} className="post-card__icon">
+            <div onClick={onUpvote} className="post-card__icon">
               <Icon
                 icon="akar-icons:arrow-up"
                 color="gray"
@@ -26,8 +26,8 @@ function PostCard(props: {
                 height="50"
               />
             </div>
-            <div className="post-card__vote-count">{props.voteCount}</div>
-            <div onClick={props.onDownvote} className="post-card__icon">
+            <div className="post-card__vote-count">{voteCount}</div>
+            <div onClick={onDownvote} className="post-card__icon">
               <Icon
                 icon="akar-icons:arrow-down"
                 color="gray"
@@ -37,11 +37,11 @@ function PostCard(props: {
             </div>
           </div>
         </div>
-        <div onClick={props.onClick} className="post-card__right-panel">
-          <div className="post-card__title">{props.title}</div>
-          <div className="post-card__description">{props.description}</div>
+        <div onClick={onClick} className="post-card__right-panel">
+          <div className="post-card__title">{title}</div>
+          <div className="post-card__description">{description}</div>
           <div className="post-card__bottom-panel">
-            <div className="post-card__user">{props.user}</div>
+            <div className="post-card__user">{user}</div>
             <div className="post-card__date">4 days ago</div>
           </div>
         </div>

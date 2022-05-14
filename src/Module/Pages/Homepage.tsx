@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useRef, useState } from "react";
+import React, { useCallback, useRef, useState } from "react";
 import Navbar from "../Components/Navbar";
 import "../../Styles/main.scss";
 import SubredditCard from "../Components/SubredditCard";
@@ -10,9 +10,10 @@ import { RootState } from "../../Redux/Store";
 function Homepage() {
   const navigate = useNavigate();
   const [pageNumber, setPageNumber] = useState(1);
-  const { loadingSubbredits, subredditError, hasMore } =
-    useSubreddit(pageNumber);
-  const SubredditsState = useSelector(
+  const { loadingSubbredits, subredditError, hasMore } = useSubreddit(
+    `https://6040c786f34cf600173c8cb7.mockapi.io/subreddits?page=${pageNumber}&limit=16`
+  );
+  const subredditsState = useSelector(
     (state: RootState) => state.subredditsSlice.subreddits
   );
 
@@ -37,8 +38,8 @@ function Homepage() {
       <Navbar pageTitle="subreddits" />
       <div className="homepage">
         <div className="homepage__subreddits">
-          {SubredditsState?.map((item, i) => {
-            if (SubredditsState.length === i + 1) {
+          {subredditsState?.map((item, i) => {
+            if (subredditsState.length === i + 1) {
               return (
                 <div key={item.id} ref={lastSubredditRef}>
                   <SubredditCard

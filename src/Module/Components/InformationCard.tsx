@@ -1,5 +1,5 @@
 import React from "react";
-import "../../Styles/Components/Navbar.scss";
+import "../../Styles/main.scss";
 
 function InformationCard() {
   return (

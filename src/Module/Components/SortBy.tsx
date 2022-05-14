@@ -1,10 +1,12 @@
-import React, { MouseEventHandler } from "react";
+import React from "react";
 import { useState } from "react";
-import "../../Styles/Components/Navbar.scss";
+import "../../Styles/main.scss";
 import { Icon } from "@iconify/react";
+import { SortByType } from "../../Types/SortByType";
 
-function SortBy(props: { onClick: MouseEventHandler<HTMLDivElement> }) {
+function SortBy({ onClick}: SortByType) {
   const [openDropdown, setOpenDropdown] = useState(false);
+  
   return (
     <div className="sort-by">
       <div className="sort-by__title">Sort by</div>
@@ -23,7 +25,7 @@ function SortBy(props: { onClick: MouseEventHandler<HTMLDivElement> }) {
         </div>
         {openDropdown && (
           <div className="sort-by__dropdown">
-            <div onClick={props.onClick} className="sort-by__dropdown-item">
+            <div onClick={onClick} className="sort-by__dropdown-item">
               Title desc
             </div>
             <div className="sort-by__dropdown-item">Date asce</div>

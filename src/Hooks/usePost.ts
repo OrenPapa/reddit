@@ -1,14 +1,12 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useParams } from "react-router-dom";
-import { Posts } from "../Types/Posts";
 import { useDispatch } from "react-redux";
 import { setPostsData } from "../Redux/PostsSlice";
 
 function useSubreddit(url: string) {
   const [loadingPosts, setLoadingPosts] = useState(false);
   const [postsError, setPostsError] = useState(null);
-  const { subredditId } = useParams();
   const dispatch = useDispatch();
 
   useEffect(() => {

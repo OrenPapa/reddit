@@ -3,9 +3,9 @@ import axios from "axios";
 import { Comments } from "../Types/Comments";
 
 function useComment(url: string) {
-  const [CommentsData, setCommentsData] = useState<Comments>();
+  const [commentsData, setCommentsData] = useState<Comments>();
   const [loadingComments, setLoadingComments] = useState(false);
-  const [CommentsError, setCommentsError] = useState(null);
+  const [commentsError, setCommentsError] = useState(null);
 
   useEffect(() => {
     setLoadingComments(true);
@@ -20,7 +20,7 @@ function useComment(url: string) {
       .finally(() => setLoadingComments(false));
   }, [url]);
 
-  return { CommentsData, loadingComments, CommentsError };
+  return { commentsData, loadingComments, commentsError };
 }
 
 export default useComment;

@@ -1,15 +1,14 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { Subreddit, Subreddits, SubredditsResponse } from "../Types/Subreddits";
+import {SubredditsResponse } from "../Types/Subreddits";
 import { useDispatch } from "react-redux";
 import { setSubredditsData } from "../Redux/SubredditSlice";
 
-function useSubreddit(pageNumber: number) {
+function useSubreddit(url: string) {
   const [loadingSubbredits, setLoadingSubreddits] = useState(false);
   const [subredditError, setSubredditError] = useState(null);
   const [hasMore, setHasMore] = useState(false);
   const dispatch = useDispatch();
-  const url = `https://6040c786f34cf600173c8cb7.mockapi.io/subreddits?page=${pageNumber}&limit=16`;
 
   useEffect(() => {
     setLoadingSubreddits(true);
@@ -23,7 +22,7 @@ function useSubreddit(pageNumber: number) {
       .catch((err) => {
         setSubredditError(err);
       });
-  }, [dispatch,url,pageNumber]);
+  }, [dispatch,url,]);
 
   return { loadingSubbredits, subredditError, hasMore };
 }
