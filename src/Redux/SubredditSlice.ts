@@ -1,6 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { getUniqueObjects } from "../Helpers/Helpers";
-import { Post } from "../Types/Posts";
 import { Subreddit } from "../Types/Subreddits";
 
 type SubredditsArray = {

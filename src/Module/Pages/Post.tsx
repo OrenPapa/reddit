@@ -1,4 +1,4 @@
-import React, { useMemo } from "react";
+import React from "react";
 import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import useComment from "../../Hooks/useComment";
@@ -13,11 +13,9 @@ function Post() {
     `https://6040c786f34cf600173c8cb7.mockapi.io/subreddits/${subredditId}/posts/${postId}/comments`
   );
   const postState = useSelector((state: RootState) => state.postsSlice.posts);
-  const selectedPost = useMemo(
-    () => postState.find((post) => post.id === postId),
-    [postState]
-  );
+  const selectedPost = postState.find((post) => post.id === "1");
 
+  console.log(postId);
   return (
     <>
       <Navbar pageTitle={selectedPost?.title} adminName={selectedPost?.user} />

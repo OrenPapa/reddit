@@ -76,7 +76,7 @@ function Posts() {
                       onDownVote(post.id);
                     }}
                     onClick={() => {
-                      navigate(`/posts/${subredditId}/post/${post.id}} `);
+                      navigate(`/posts/${subredditId}/post/${post.id}`);
                     }}
                   />
                 );
