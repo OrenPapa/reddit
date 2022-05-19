@@ -1,8 +1,6 @@
 import React from "react";
-import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import useComment from "../../Hooks/useComment";
-import { RootState } from "../../Redux/Store";
 import "../../Styles/main.scss";
 import Navbar from "../Components/Navbar";
 import PostCard from "../Components/PostCard";
@@ -12,13 +10,11 @@ function Post() {
   const { commentsData, loadingComments, commentsError } = useComment(
     `https://6040c786f34cf600173c8cb7.mockapi.io/subreddits/${subredditId}/posts/${postId}/comments`
   );
-  const postState = useSelector((state: RootState) => state.postsSlice.posts);
-  const selectedPost = postState.find((post) => post.id === "1");
 
   console.log(postId);
   return (
     <>
-      <Navbar pageTitle={selectedPost?.title} adminName={selectedPost?.user} />
+      {/* <Navbar pageTitle={selectedPost?.title} adminName={selectedPost?.user} />
       <div className="post-screen">
         <div className="post-screen__top-panel">
           <PostCard
@@ -47,7 +43,7 @@ function Post() {
             );
           })}
         </div>
-      </div>
+      </div> */}
     </>
   );
 }

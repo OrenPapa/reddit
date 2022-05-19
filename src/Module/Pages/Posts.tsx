@@ -2,9 +2,6 @@ import React, { useState, useMemo } from "react";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
-import usePost from "../../Hooks/usePost";
-import { ActionTypes, updateVoteCount } from "../../Redux/PostsSlice";
-import { RootState } from "../../Redux/Store";
 import "../../Styles/main.scss";
 import InformationCard from "../Components/InformationCard";
 import Navbar from "../Components/Navbar";
@@ -15,46 +12,37 @@ function Posts() {
   const dispatch = useDispatch();
   const { subredditId } = useParams();
   const [urlParam, setUrlParam] = useState("");
-  const { loadingPosts, postsError } = usePost(
-    `https://6040c786f34cf600173c8cb7.mockapi.io/subreddits/${subredditId}/posts${urlParam}`
-  );
+  // const { loadingPosts, postsError } = usePost(
+  //   `https://6040c786f34cf600173c8cb7.mockapi.io/subreddits/${subredditId}/posts${urlParam}`
+  // );
   const navigate = useNavigate();
   const sortByTitle = "?sortBy=title";
-  const postState = useSelector((state: RootState) => state.postsSlice.posts);
-  const subredditsState = useSelector(
-    (state: RootState) => state.subredditsSlice.subreddits
-  );
 
-  const selectedSubreddit = useMemo(
-    () => subredditsState!.find((subreddit) => subreddit.id === subredditId),
-    [subredditsState]
-  );
+  // const onUpVote = (id: string) => {
+  //   dispatch(
+  //     updateVoteCount({
+  //       id: id,
+  //       vote: ActionTypes.UP_VOTE,
+  //       isUpvoted: true,
+  //       isDownvoted: false,
+  //     })
+  //   );
+  // };
 
-  const onUpVote = (id: string) => {
-    dispatch(
-      updateVoteCount({
-        id: id,
-        vote: ActionTypes.UP_VOTE,
-        isUpvoted: true,
-        isDownvoted: false,
-      })
-    );
-  };
-
-  const onDownVote = (id: string) => {
-    dispatch(
-      updateVoteCount({
-        id: id,
-        vote: ActionTypes.DOWN_VOTE,
-        isUpvoted: false,
-        isDownvoted: true,
-      })
-    );
-  };
+  // const onDownVote = (id: string) => {
+  //   dispatch(
+  //     updateVoteCount({
+  //       id: id,
+  //       vote: ActionTypes.DOWN_VOTE,
+  //       isUpvoted: false,
+  //       isDownvoted: true,
+  //     })
+  //   );
+  // };
 
   return (
     <>
-      <Navbar pageTitle={selectedSubreddit!.title} />
+      {/* <Navbar pageTitle={selectedSubreddit!.title} />
       <div className="posts-screen">
         <div className="posts-screen__left-panel">
           <div className="posts-screen__left-panel-content">
@@ -93,7 +81,7 @@ function Posts() {
             <InformationCard />
           </div>
         </div>
-      </div>
+      </div> */}
     </>
   );
 }
