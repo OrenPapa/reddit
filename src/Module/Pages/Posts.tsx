@@ -1,7 +1,7 @@
-import React, { useState, useMemo } from "react";
-import { useDispatch } from "react-redux";
-import { useSelector } from "react-redux";
+import React, { useState, useMemo, useContext } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import { ActionTypes, PostContext } from "../../Context/PostContext";
+import { SubredditContext } from "../../Context/SubredditContext";
 import "../../Styles/main.scss";
 import InformationCard from "../Components/InformationCard";
 import Navbar from "../Components/Navbar";
@@ -9,46 +9,36 @@ import PostCard from "../Components/PostCard";
 import SortBy from "../Components/SortBy";
 
 function Posts() {
-  const dispatch = useDispatch();
   const { subredditId } = useParams();
   const [urlParam, setUrlParam] = useState("");
-  // const { loadingPosts, postsError } = usePost(
-  //   `https://6040c786f34cf600173c8cb7.mockapi.io/subreddits/${subredditId}/posts${urlParam}`
-  // );
+  const {
+    postData,
+    postLoading,
+    postError,
+    getPost,
+    voteHandler,
+  } = useContext(PostContext);
+  const { subredditsData } = useContext(SubredditContext);
+  const selectedSubreddit = useMemo(
+    () => subredditsData!.find((subreddit) => subreddit.id === subredditId),
+    [subredditsData]
+  );
   const navigate = useNavigate();
   const sortByTitle = "?sortBy=title";
 
-  // const onUpVote = (id: string) => {
-  //   dispatch(
-  //     updateVoteCount({
-  //       id: id,
-  //       vote: ActionTypes.UP_VOTE,
-  //       isUpvoted: true,
-  //       isDownvoted: false,
-  //     })
-  //   );
-  // };
-
-  // const onDownVote = (id: string) => {
-  //   dispatch(
-  //     updateVoteCount({
-  //       id: id,
-  //       vote: ActionTypes.DOWN_VOTE,
-  //       isUpvoted: false,
-  //       isDownvoted: true,
-  //     })
-  //   );
-  // };
+  getPost!(
+    `https://6040c786f34cf600173c8cb7.mockapi.io/subreddits/${subredditId}/posts${urlParam}`
+  );
 
   return (
     <>
-      {/* <Navbar pageTitle={selectedSubreddit!.title} />
+      <Navbar pageTitle={selectedSubreddit!.title} />
       <div className="posts-screen">
         <div className="posts-screen__left-panel">
           <div className="posts-screen__left-panel-content">
             <SortBy onClick={() => setUrlParam(sortByTitle)} />
             <div className="posts-screen__posts-container">
-              {postState?.map((post) => {
+              {postData?.map((post) => {
                 return (
                   <PostCard
                     key={post.id}
@@ -58,10 +48,10 @@ function Posts() {
                     user={post.user}
                     voteCount={post.upvotes - post.downvotes}
                     onUpvote={() => {
-                      onUpVote(post.id);
+                      voteHandler!(post.id, ActionTypes.UP_VOTE, true, false);
                     }}
                     onDownvote={() => {
-                      onDownVote(post.id);
+                      voteHandler!(post.id, ActionTypes.UP_VOTE, false, true);
                     }}
                     onClick={() => {
                       navigate(`/posts/${subredditId}/post/${post.id}`);
@@ -69,8 +59,8 @@ function Posts() {
                   />
                 );
               })}
-              {loadingPosts && <h2>Loading...</h2>}
-              {postsError && (
+              {postLoading && <h2>Loading...</h2>}
+              {postError && (
                 <h2>An error has occured please refresh your page.</h2>
               )}
             </div>
@@ -81,7 +71,7 @@ function Posts() {
             <InformationCard />
           </div>
         </div>
-      </div> */}
+      </div>
     </>
   );
 }
