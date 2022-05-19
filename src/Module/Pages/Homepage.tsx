@@ -7,13 +7,15 @@ import { SubredditContext } from "../../Context/SubredditContext";
 
 function Homepage() {
   const navigate = useNavigate();
+  const [pageNumber, setPageNumber] = useState(1);
   const {
     subredditsData,
     subredditsLoading,
     subredditsError,
     subredditsHasMore,
-    changePageNumber,
+    getSubreddits,
   } = useContext(SubredditContext);
+  getSubreddits!(`https://6040c786f34cf600173c8cb7.mockapi.io/subreddits?page=${pageNumber}&limit=16`)
 
   window.addEventListener("scroll", () => {
     if (
@@ -21,7 +23,7 @@ function Homepage() {
         document.documentElement.scrollHeight &&
       subredditsHasMore
     ) {
-      changePageNumber!();
+      setPageNumber(pageNumber + 1);
     }
   });
 
