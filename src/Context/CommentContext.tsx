@@ -1,7 +1,8 @@
 import axios from "axios";
 import { url } from "inspector";
-import { createContext, useEffect, useState } from "react";
+import React, { createContext, useEffect, useState } from "react";
 import { Comment } from "../Types/Comments";
+import { ChildrenType } from "../Types/ProviderChildrenType";
 
 type InitialState = {
   commentsData?: Comment[];
@@ -12,7 +13,7 @@ type InitialState = {
 
 export const CommentContext = createContext<InitialState>({});
 
-export const CommetnContextProvider = ({ children }: any) => {
+export const CommetnContextProvider = ( {children} :ChildrenType) => {
   const [Data, setData] = useState<Comment[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);

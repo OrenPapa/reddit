@@ -1,6 +1,7 @@
 import axios from "axios";
 import { createContext, useEffect, useState } from "react";
 import { Post } from "../Types/Posts";
+import { ChildrenType } from "../Types/ProviderChildrenType";
 
 export enum ActionTypes {
   UP_VOTE = "UP_VOTE",
@@ -22,7 +23,7 @@ type InitialState = {
 
 export const PostContext = createContext<InitialState>({});
 
-export const PostContextProvider = ({ children }: any) => {
+export const PostContextProvider = ( {children} :ChildrenType) => {
   const [Data, setData] = useState<Post[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);

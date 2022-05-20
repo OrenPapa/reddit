@@ -1,6 +1,7 @@
 import axios from "axios";
 import { createContext, useEffect, useState } from "react";
 import { getUniqueObjects } from "../Helpers/Helpers";
+import { ChildrenType } from "../Types/ProviderChildrenType";
 import { Subreddit, SubredditsResponse } from "../Types/Subreddits";
 
 type InitialState = {
@@ -13,7 +14,7 @@ type InitialState = {
 
 export const SubredditContext = createContext<InitialState>({});
 
-export const SubredditContextProvider = ({ children }: any) => {
+export const SubredditContextProvider = ({ children }: ChildrenType) => {
   const [Data, setData] = useState<Subreddit[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
