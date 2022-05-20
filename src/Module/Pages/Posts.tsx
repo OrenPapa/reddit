@@ -1,7 +1,7 @@
 import React, { useState, useMemo, useContext } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { ActionTypes, PostContext } from "../../Context/PostContext";
-import { SubredditContext } from "../../Context/SubredditContext";
+import { SubredditContext, SubredditContextProvider } from "../../Context/SubredditContext";
 import "../../Styles/main.scss";
 import InformationCard from "../Components/InformationCard";
 import Navbar from "../Components/Navbar";

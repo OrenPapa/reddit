@@ -42,40 +42,6 @@ export const PostContextProvider = ({ children }: any) => {
     }, [url]);
   };
 
-  const voteHandler = (
-    id: string,
-    vote: string,
-    isUpvoted?: boolean,
-    isDownvoted?: boolean
-  ) => {
-    let post = Data.find((post) => post.id === id);
-    if (!post) return;
-    // if (vote === ActionTypes.UP_VOTE && !post.isUpvoted && !post.isDownvoted) {
-    //   post.upvotes += 1;
-    //   post.isUpvoted = isUpvoted!;
-    //   post.isDownvoted = isDownvoted!;
-    // }
-    // if (vote === ActionTypes.UP_VOTE && !post.isUpvoted && post.isDownvoted) {
-    //   post.upvotes += 2;
-    //   post.isUpvoted = isUpvoted!;
-    //   post.isDownvoted = isDownvoted!;
-    // }
-    // if (
-    //   vote === ActionTypes.DOWN_VOTE &&
-    //   !post.isUpvoted &&
-    //   !post.isDownvoted
-    // ) {
-    //   post.downvotes += 1;
-    //   post.isDownvoted = isDownvoted!;
-    //   post.isUpvoted = isUpvoted!;
-    // }
-    // if (vote === ActionTypes.DOWN_VOTE && post.isUpvoted && !post.isDownvoted) {
-    //   post.downvotes += 2;
-    //   post.isDownvoted = isDownvoted!;
-    //   post.isUpvoted = isUpvoted!;
-    // }
-  };
-
   return (
     <PostContext.Provider
       value={{
@@ -83,7 +49,6 @@ export const PostContextProvider = ({ children }: any) => {
         postLoading: loading,
         postError: error,
         getPost: UsePosts,
-        voteHandler: voteHandler,
       }}
     >
       {children}
