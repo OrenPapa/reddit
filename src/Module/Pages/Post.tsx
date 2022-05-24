@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useMemo } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { getComments } from "../../Redux/CommentsSlice";
@@ -11,10 +11,13 @@ function Post() {
   const { subredditId, postId } = useParams();
   const dispatch = useDispatch<AppDispatch>();
   useEffect(() => {
-    dispatch(getComments({subredditId, postId}));
+    dispatch(getComments({ subredditId, postId }));
   }, [dispatch, subredditId, postId]);
   const postState = useSelector((state: RootState) => state.postsSlice);
-  const selectedPost = postState.posts.find((post) => post.id === postId);
+  const selectedPost = useMemo(
+    () => postState.posts.find((post) => post.id === postId),
+    [postId]
+  );
   const commentsState = useSelector((state: RootState) => state.commentsSlice);
 
   return (

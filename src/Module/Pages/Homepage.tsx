@@ -15,7 +15,6 @@ function Homepage() {
   const subredditsState = useSelector(
     (state: RootState) => state.subredditsSlice
   );
-
   useEffect(() => {
     dispatch(getSubreddits(pageNumber));
   }, [dispatch, pageNumber]);
