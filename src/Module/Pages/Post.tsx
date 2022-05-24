@@ -1,21 +1,22 @@
-import React from "react";
-import { useSelector } from "react-redux";
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
-import useComment from "../../Hooks/useComment";
-import { RootState } from "../../Redux/Store";
+import { getComments } from "../../Redux/CommentsSlice";
+import { AppDispatch, RootState } from "../../Redux/Store";
 import "../../Styles/main.scss";
 import Navbar from "../Components/Navbar";
 import PostCard from "../Components/PostCard";
 
 function Post() {
   const { subredditId, postId } = useParams();
-  const { commentsData, loadingComments, commentsError } = useComment(
-    `https://6040c786f34cf600173c8cb7.mockapi.io/subreddits/${subredditId}/posts/${postId}/comments`
-  );
-  const postState = useSelector((state: RootState) => state.postsSlice.posts);
-  const selectedPost = postState.find((post) => post.id === "1");
+  const dispatch = useDispatch<AppDispatch>();
+  useEffect(() => {
+    dispatch(getComments({subredditId, postId}));
+  }, [dispatch, subredditId, postId]);
+  const postState = useSelector((state: RootState) => state.postsSlice);
+  const selectedPost = postState.posts.find((post) => post.id === postId);
+  const commentsState = useSelector((state: RootState) => state.commentsSlice);
 
-  console.log(postId);
   return (
     <>
       <Navbar pageTitle={selectedPost?.title} adminName={selectedPost?.user} />
@@ -26,16 +27,15 @@ function Post() {
             title={selectedPost?.title}
             description={selectedPost?.body}
             user={selectedPost?.user}
-            voteCount={selectedPost?.upvotes! - selectedPost?.downvotes!}
+            voteCount={selectedPost!.upvotes - selectedPost!.downvotes}
           />
         </div>
         <div className="post-screen__bottom-panel">
-          {loadingComments && <h2>Loading...</h2>}
-          {commentsError && (
+          {postState.isLoading && <h2>Loading...</h2>}
+          {postState.hasError && (
             <h2>An error has occured please refresh your page.</h2>
           )}
-          {commentsData?.map((comment) => {
-            console.log(comment);
+          {commentsState.comments?.map((comment) => {
             return (
               <PostCard
                 id={comment.id}

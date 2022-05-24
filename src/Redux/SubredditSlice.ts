@@ -33,7 +33,6 @@ const SubredditsSlice = createSlice({
      state.subreddits = getUniqueObjects([...state.subreddits, ...action.payload])
      state.hasMore = action.payload.length > 0; 
       state.isLoading = false;
-      console.log(state.hasMore)
     })
     .addCase(getSubreddits.rejected, (state: SubredditsState) => {
       state.hasError = true;

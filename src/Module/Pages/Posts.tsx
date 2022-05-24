@@ -1,10 +1,9 @@
-import React, { useState, useMemo } from "react";
+import React, { useState, useMemo, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
-import usePost from "../../Hooks/usePost";
-import { ActionTypes, updateVoteCount } from "../../Redux/PostsSlice";
-import { RootState } from "../../Redux/Store";
+import { ActionTypes, getPosts, updateVoteCount } from "../../Redux/PostsSlice";
+import { AppDispatch, RootState } from "../../Redux/Store";
 import "../../Styles/main.scss";
 import InformationCard from "../Components/InformationCard";
 import Navbar from "../Components/Navbar";
@@ -12,23 +11,22 @@ import PostCard from "../Components/PostCard";
 import SortBy from "../Components/SortBy";
 
 function Posts() {
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<AppDispatch>();
   const { subredditId } = useParams();
   const [urlParam, setUrlParam] = useState("");
-  const { loadingPosts, postsError } = usePost(
-    `https://6040c786f34cf600173c8cb7.mockapi.io/subreddits/${subredditId}/posts${urlParam}`
-  );
   const navigate = useNavigate();
   const sortByTitle = "?sortBy=title";
-  const postState = useSelector((state: RootState) => state.postsSlice.posts);
+  useEffect(() => {
+    dispatch(getPosts({ subredditId, urlParam }));
+  }, [dispatch, subredditId, urlParam]);
   const subredditsState = useSelector(
     (state: RootState) => state.subredditsSlice.subreddits
   );
-
   const selectedSubreddit = useMemo(
     () => subredditsState!.find((subreddit) => subreddit.id === subredditId),
     [subredditsState]
   );
+  const postsState = useSelector((state: RootState) => state.postsSlice);
 
   const onUpVote = (id: string) => {
     dispatch(
@@ -60,7 +58,7 @@ function Posts() {
           <div className="posts-screen__left-panel-content">
             <SortBy onClick={() => setUrlParam(sortByTitle)} />
             <div className="posts-screen__posts-container">
-              {postState?.map((post) => {
+              {postsState.posts?.map((post) => {
                 return (
                   <PostCard
                     key={post.id}
@@ -81,8 +79,8 @@ function Posts() {
                   />
                 );
               })}
-              {loadingPosts && <h2>Loading...</h2>}
-              {postsError && (
+              {postsState.isLoading && <h2>Loading...</h2>}
+              {postsState.hasError && (
                 <h2>An error has occured please refresh your page.</h2>
               )}
             </div>

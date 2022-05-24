@@ -1,4 +1,5 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
+import axios from "axios";
 import { Post} from "../Types/Posts";
 
 export enum ActionTypes {
@@ -6,19 +7,39 @@ export enum ActionTypes {
   DOWN_VOTE = 'DOWN_VOTE'
 }
 
+export const getPosts = createAsyncThunk(
+  "subreddits/getSubreddits",
+  async ({subredditId, urlParam}: {subredditId: string | undefined , urlParam: string}) => {
+    const response = await axios.get(`https://6040c786f34cf600173c8cb7.mockapi.io/subreddits/${subredditId}/posts${urlParam}`)
+    return response.data
+  }
+)
 type PostsArray = {
-  posts: Array<Post>;
+  posts: Post[];
+  isLoading: boolean;
+  hasError: boolean;
+  
 };
-
-const initialState: PostsArray = { posts: [] };
+const initialState: PostsArray = { posts: [] , isLoading: true, hasError: false,};
 
 const PostsSlice = createSlice({
   name: "PostsSlice",
   initialState: initialState,
+  extraReducers: (builder) => {
+    builder
+    .addCase(getPosts.pending, (state: PostsArray) => {
+      state.isLoading = true;
+    },)
+    .addCase(getPosts.fulfilled, (state: PostsArray, action: PayloadAction<Post[]>) => {
+     state.posts = action.payload
+      state.isLoading = false;
+    })
+    .addCase(getPosts.rejected, (state: PostsArray) => {
+      state.hasError = true;
+      state.isLoading = false;
+    }) },
+
   reducers: {
-    setPostsData(state, action: PayloadAction<Array<Post>>) {
-      state.posts = action.payload;
-    },
     updateVoteCount(state, action: PayloadAction<{ id: string; vote: string, isUpvoted?: boolean, isDownvoted?: boolean }>) {
       const post = state.posts.find((post) => post.id === action.payload.id);
       if (!post) return;
@@ -45,5 +66,5 @@ const PostsSlice = createSlice({
       }
   },
 });
-export const { setPostsData, updateVoteCount } = PostsSlice.actions;
+export const { updateVoteCount } = PostsSlice.actions;
 export default PostsSlice.reducer;
