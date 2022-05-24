@@ -8,12 +8,13 @@ import PostCard from "../Components/PostCard";
 
 function Post() {
   const { subredditId, postId } = useParams();
-  const { commentsData, commentsError, commentsLoading, getcomments } =
+  const { commentsData, commentsError, commentsLoading, getComments } =
     useContext(CommentContext);
   const { postData } = useContext(PostContext);
-  getcomments!(
+  getComments!(
     `https://6040c786f34cf600173c8cb7.mockapi.io/subreddits/${subredditId}/posts/${postId}/comments`
   );
+
   const selectedPost = useMemo(
     () => postData?.find((post) => post.id === postId),
     [postId]

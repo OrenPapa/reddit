@@ -1,6 +1,6 @@
 import axios from "axios";
 import { url } from "inspector";
-import React, { createContext, useEffect, useState } from "react";
+import React, { createContext, useCallback, useEffect, useState } from "react";
 import { Comment } from "../Types/Comments";
 import { ChildrenType } from "../Types/ProviderChildrenType";
 
@@ -8,18 +8,18 @@ type InitialState = {
   commentsData?: Comment[];
   commentsLoading?: boolean;
   commentsError?: boolean;
-  getcomments?: (arg0: string) => void;
+  getComments?: (arg0: string) => void;
 };
 
 export const CommentContext = createContext<InitialState>({});
 
-export const CommetnContextProvider = ( {children} :ChildrenType) => {
-  const [Data, setData] = useState<Comment[]>([]);
+export const CommetnContextProvider = ({ children }: ChildrenType) => {
+  const [data, setData] = useState<Comment[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
 
   const useComments = (url: string) => {
-    useEffect(() => {
+    const apiCall = useCallback(() => {
       setLoading(true);
       axios
         .get(url)
@@ -31,15 +31,18 @@ export const CommetnContextProvider = ( {children} :ChildrenType) => {
         })
         .finally(() => setLoading(false));
     }, [url]);
+    useEffect(() => {
+      apiCall();
+    }, [apiCall]);
   };
 
   return (
     <CommentContext.Provider
       value={{
-        commentsData: Data,
+        commentsData: data,
         commentsLoading: loading,
         commentsError: error,
-        getcomments: useComments,
+        getComments: useComments,
       }}
     >
       {children}

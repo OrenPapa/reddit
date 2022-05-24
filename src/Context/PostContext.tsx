@@ -1,5 +1,5 @@
 import axios from "axios";
-import { createContext, useEffect, useState } from "react";
+import { createContext, useCallback, useEffect, useState } from "react";
 import { Post } from "../Types/Posts";
 import { ChildrenType } from "../Types/ProviderChildrenType";
 
@@ -23,13 +23,13 @@ type InitialState = {
 
 export const PostContext = createContext<InitialState>({});
 
-export const PostContextProvider = ( {children} :ChildrenType) => {
-  const [Data, setData] = useState<Post[]>([]);
+export const PostContextProvider = ({ children }: ChildrenType) => {
+  const [data, setData] = useState<Post[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
 
   const UsePosts = (url: string) => {
-    useEffect(() => {
+    const apiCall = useCallback(() => {
       setLoading(true);
       axios
         .get(url)
@@ -41,12 +41,15 @@ export const PostContextProvider = ( {children} :ChildrenType) => {
           setError(err);
         });
     }, [url]);
+    useEffect(() => {
+      apiCall();
+    }, [apiCall]);
   };
 
   return (
     <PostContext.Provider
       value={{
-        postData: Data,
+        postData: data,
         postLoading: loading,
         postError: error,
         getPost: UsePosts,

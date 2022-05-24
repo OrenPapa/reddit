@@ -1,5 +1,5 @@
 import axios from "axios";
-import { createContext, useEffect, useState } from "react";
+import { createContext, useCallback, useEffect, useState } from "react";
 import { getUniqueObjects } from "../Helpers/Helpers";
 import { ChildrenType } from "../Types/ProviderChildrenType";
 import { Subreddit, SubredditsResponse } from "../Types/Subreddits";
@@ -15,18 +15,18 @@ type InitialState = {
 export const SubredditContext = createContext<InitialState>({});
 
 export const SubredditContextProvider = ({ children }: ChildrenType) => {
-  const [Data, setData] = useState<Subreddit[]>([]);
+  const [data, setData] = useState<Subreddit[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
   const [hasMore, setHasMore] = useState(true);
 
   const UseSubreddits = (url: string) => {
-    useEffect(() => {
+    const apiCall = useCallback(() => {
       setLoading(true);
       axios
         .get(url)
         .then((response: SubredditsResponse) => {
-          setData(getUniqueObjects([...Data, ...response.data]));
+          setData(getUniqueObjects([...data, ...response.data]));
           setHasMore(response.data.length > 0);
           setLoading(false);
         })
@@ -34,12 +34,13 @@ export const SubredditContextProvider = ({ children }: ChildrenType) => {
           setError(err);
         });
     }, [url]);
+    useEffect(() => apiCall(), [apiCall]);
   };
 
   return (
     <SubredditContext.Provider
       value={{
-        subredditsData: Data,
+        subredditsData: data,
         subredditsLoading: loading,
         subredditsError: error,
         subredditsHasMore: hasMore,
