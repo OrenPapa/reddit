@@ -4,8 +4,8 @@ import { Comment } from "../Types/Comments";
 
 export const getComments = createAsyncThunk(
     "subreddits/getSubreddits",
-    async ({subredditId, postId}: {subredditId: string | undefined , postId: string | undefined}) => {
-      const response = await axios.get(`https://6040c786f34cf600173c8cb7.mockapi.io/subreddits/${subredditId}/posts/${postId}/comments`)
+    async (url: string) => {
+      const response = await axios.get(url)
       return response.data
     }
   )

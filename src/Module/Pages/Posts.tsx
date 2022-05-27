@@ -4,6 +4,7 @@ import { useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import { ActionTypes, getPosts, updateVoteCount } from "../../Redux/PostsSlice";
 import { AppDispatch, RootState } from "../../Redux/Store";
+import { getSubreddits } from "../../Redux/SubredditSlice";
 import "../../Styles/main.scss";
 import InformationCard from "../Components/InformationCard";
 import Navbar from "../Components/Navbar";
@@ -17,7 +18,14 @@ function Posts() {
   const navigate = useNavigate();
   const sortByTitle = "?sortBy=title";
   useEffect(() => {
-    dispatch(getPosts({ subredditId, urlParam }));
+    dispatch(
+      getSubreddits(`https://6040c786f34cf600173c8cb7.mockapi.io/subreddits`)
+    );
+    dispatch(
+      getPosts(
+        `https://6040c786f34cf600173c8cb7.mockapi.io/subreddits/${subredditId}/posts${urlParam}`
+      )
+    );
   }, [dispatch, subredditId, urlParam]);
   const subredditsState = useSelector(
     (state: RootState) => state.subredditsSlice.subreddits
@@ -52,7 +60,7 @@ function Posts() {
 
   return (
     <>
-      <Navbar pageTitle={selectedSubreddit!.title} />
+      <Navbar pageTitle={selectedSubreddit && selectedSubreddit!.title} />
       <div className="posts-screen">
         <div className="posts-screen__left-panel">
           <div className="posts-screen__left-panel-content">

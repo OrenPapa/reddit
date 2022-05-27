@@ -5,8 +5,8 @@ import { Subreddit, SubredditsResponse } from "../Types/Subreddits";
 
 export const getSubreddits = createAsyncThunk(
   "subreddits/getSubreddits",
-  async (pageNumber: number) => {
-    const response: SubredditsResponse = await axios.get(`https://6040c786f34cf600173c8cb7.mockapi.io/subreddits?page=${pageNumber}&limit=16`)
+  async (url: string) => {
+    const response: SubredditsResponse = await axios.get(url)
     return response.data
   }
 )

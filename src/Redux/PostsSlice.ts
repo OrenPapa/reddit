@@ -9,8 +9,8 @@ export enum ActionTypes {
 
 export const getPosts = createAsyncThunk(
   "subreddits/getSubreddits",
-  async ({subredditId, urlParam}: {subredditId: string | undefined , urlParam: string}) => {
-    const response = await axios.get(`https://6040c786f34cf600173c8cb7.mockapi.io/subreddits/${subredditId}/posts${urlParam}`)
+  async (url: string) => {
+    const response = await axios.get(url)
     return response.data
   }
 )

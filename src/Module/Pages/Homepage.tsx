@@ -16,7 +16,11 @@ function Homepage() {
     (state: RootState) => state.subredditsSlice
   );
   useEffect(() => {
-    dispatch(getSubreddits(pageNumber));
+    dispatch(
+      getSubreddits(
+        `https://6040c786f34cf600173c8cb7.mockapi.io/subreddits?page=${pageNumber}&limit=16`
+      )
+    );
   }, [dispatch, pageNumber]);
 
   window.addEventListener("scroll", () => {
