@@ -10,28 +10,40 @@ function Post() {
   const { subredditId, postId } = useParams();
   const { commentsData, commentsError, commentsLoading, getComments } =
     useContext(CommentContext);
-  const { postData } = useContext(PostContext);
+  const { postData, getPost } = useContext(PostContext);
+  getPost!(
+    `https://6040c786f34cf600173c8cb7.mockapi.io/subreddits/${subredditId}/posts`
+  );
   getComments!(
     `https://6040c786f34cf600173c8cb7.mockapi.io/subreddits/${subredditId}/posts/${postId}/comments`
   );
 
   const selectedPost = useMemo(
     () => postData?.find((post) => post.id === postId),
-    [postId]
+    [postData, postId]
   );
+
+  console.log(postData);
 
   return (
     <>
-      <Navbar pageTitle={selectedPost?.title} adminName={selectedPost?.user} />
+      <Navbar
+        pageTitle={selectedPost ? selectedPost?.title : "Loading..."}
+        adminName={selectedPost && selectedPost?.user}
+      />
       <div className="post-screen">
         <div className="post-screen__top-panel">
-          <PostCard
-            id={selectedPost!.id}
-            title={selectedPost?.title}
-            description={selectedPost?.body}
-            user={selectedPost?.user}
-            voteCount={selectedPost?.upvotes! - selectedPost?.downvotes!}
-          />
+          {selectedPost ? (
+            <PostCard
+              id={selectedPost!.id}
+              title={selectedPost?.title}
+              description={selectedPost?.body}
+              user={selectedPost?.user}
+              voteCount={selectedPost?.upvotes! - selectedPost?.downvotes!}
+            />
+          ) : (
+            <h2>Loading...</h2>
+          )}
         </div>
         <div className="post-screen__bottom-panel">
           {commentsLoading && <h2>Loading...</h2>}

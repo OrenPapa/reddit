@@ -1,7 +1,9 @@
 import React, { useState, useMemo, useContext } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { ActionTypes, PostContext } from "../../Context/PostContext";
-import { SubredditContext, SubredditContextProvider } from "../../Context/SubredditContext";
+import {
+  SubredditContext,
+} from "../../Context/SubredditContext";
 import "../../Styles/main.scss";
 import InformationCard from "../Components/InformationCard";
 import Navbar from "../Components/Navbar";
@@ -11,28 +13,24 @@ import SortBy from "../Components/SortBy";
 function Posts() {
   const { subredditId } = useParams();
   const [urlParam, setUrlParam] = useState("");
-  const {
-    postData,
-    postLoading,
-    postError,
-    getPost,
-    voteHandler,
-  } = useContext(PostContext);
-  const { subredditsData } = useContext(SubredditContext);
+  const { postData, postLoading, postError, getPost, voteHandler } =
+    useContext(PostContext);
+
+  const { subredditsData, getSubreddits } = useContext(SubredditContext);
   const selectedSubreddit = useMemo(
     () => subredditsData!.find((subreddit) => subreddit.id === subredditId),
     [subredditsData]
   );
   const navigate = useNavigate();
   const sortByTitle = "?sortBy=title";
-
+  getSubreddits!(`https://6040c786f34cf600173c8cb7.mockapi.io/subreddits`);
   getPost!(
     `https://6040c786f34cf600173c8cb7.mockapi.io/subreddits/${subredditId}/posts${urlParam}`
   );
 
   return (
     <>
-      <Navbar pageTitle={selectedSubreddit!.title} />
+      <Navbar pageTitle={selectedSubreddit && selectedSubreddit!.title} />
       <div className="posts-screen">
         <div className="posts-screen__left-panel">
           <div className="posts-screen__left-panel-content">
