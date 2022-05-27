@@ -23,8 +23,6 @@ function Post() {
     [postData, postId]
   );
 
-  console.log(postData);
-
   return (
     <>
       <Navbar
