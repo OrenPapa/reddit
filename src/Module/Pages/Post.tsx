@@ -26,10 +26,9 @@ function Post() {
   const postState = useSelector((state: RootState) => state.postsSlice);
   const selectedPost = useMemo(
     () => postState.posts.find((post) => post.id === postId),
-    [postId, postState]
+    [ postState]
   );
   const commentsState = useSelector((state: RootState) => state.commentsSlice);
-  console.log(selectedPost);
 
   return (
     <>
